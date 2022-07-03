@@ -1,5 +1,4 @@
 const webpackConfig = require('./config/webpack.config')
-
 const { overrideDevServer } = require('customize-cra')
 module.exports = {
   webpack: webpackConfig,
@@ -7,7 +6,8 @@ module.exports = {
   devServer: overrideDevServer((config) => {
     config.proxy = {
       '/api/': {
-        target: 'http://127.0.0.1:7001/v1',
+        // target: 'http://127.0.0.1:7001/v1',
+        target: process.env.API_HOST,
         changeOrigin: true,
         pathRewrite: { '^/api/': '/' }
       },

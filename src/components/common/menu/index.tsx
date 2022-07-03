@@ -29,6 +29,7 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
   const { pathname } = useLocation()
   const { tabKey: curKey = 'home' } = getKeyName(pathname)
   const [current, setCurrent] = useState(curKey)
+  // 获取用户权限，根据权限过滤菜单
   const { permission = [] } = userInfo
 
   // 递归逐级向上获取最近一级的菜单，并高亮
@@ -82,7 +83,8 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
   const creatSubMenu = (data: CommonObjectType): JSX.Element => {
     const menuItemList = []
     data.routes.map((item: MenuType) => {
-      const arr = permission.filter((ele) => item.key === ele.code)
+      // TODO 开发阶段不过滤菜单
+      const arr = permission.filter((ele) => item.key === ele.code || true)
       if (arr.length > 0) {
         menuItemList.push(renderMenu(item))
       }

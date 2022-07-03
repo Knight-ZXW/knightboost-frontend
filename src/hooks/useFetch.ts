@@ -28,7 +28,6 @@ export function useFetch(url, options = {}) {
   // Serialize the "fetch" options so it may become
   // a dependency to the "useEffect" below.
   const serializedOptions = JSON.stringify(options)
-
   useEffect(() => {
     dispatch({ type: 'loading' })
 
@@ -37,8 +36,8 @@ export function useFetch(url, options = {}) {
         console.log(res.status, res.statusText)
         return res.json()
       })
-      .then((data) => dispatch({ type: 'response', data }))
-      .catch((error) => dispatch({ type: 'error', error }))
+      .then((_data) => dispatch({ type: 'response', data: _data }))
+      .catch((_error) => dispatch({ type: 'error', error: _error }))
   }, [url, serializedOptions])
 
   return { loading, error, data }

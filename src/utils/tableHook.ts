@@ -19,6 +19,7 @@ export const useServiceCallback = (
       setError(null)
       service(params)
         .then((res) => {
+          console.log('res -> is ', res)
           setLoading(false)
           setResponse(res)
         })

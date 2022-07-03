@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
-import { UserInfo } from '@/app_models/user'
+import { UserInfo } from '@/types/user'
 
 export interface UserState {
   UserInfo: UserInfo & { is_oidc_user: boolean }

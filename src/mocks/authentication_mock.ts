@@ -1,5 +1,5 @@
 import { rest } from 'msw'
-import type { UserInfo } from '@/app_models/user'
+import { UserInfo } from '@/types/user'
 
 export const userRes: UserInfo[] = [
   {

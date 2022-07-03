@@ -10,7 +10,9 @@ import moment from 'moment'
 import 'moment/locale/zh-cn'
 import { loadOidcUser } from '@/config/oidc_setting'
 import { setUserInfo } from '@/store/slicers/userSlice'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import App from './App'
+import './i18n'
 import '@/assets/css/public.less' // 官方全部样式 ,但是可以通过变量控制
 import '@/utils'
 import './index.css'
@@ -34,6 +36,15 @@ if (process.env.NODE_ENV === 'development') {
     onUnhandledRequest: 'bypass'
   })
 }
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false
+    }
+  }
+})
 
 /**
  * Use deferred application mounting in order to work in a sandbox.

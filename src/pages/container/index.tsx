@@ -1,9 +1,10 @@
-import React, { FC, useState, useEffect, useRef, Component } from 'react'
+/* eslint-disable no-unused-vars */
+import React, { Component, FC, useEffect, useRef, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import MenuView from '@/components/common/menu'
 import classNames from 'classnames'
-import { Layout, BackTop } from 'antd'
-import { getKeyName, isAuthorized } from '@/assets/js/publicFunc'
+import { BackTop, Layout } from 'antd'
+import { getKeyName } from '@/assets/js/publicFunc'
 import Header from '@/components/common/header'
 import TabPanes from '@/components/common/tabPanes'
 import { selectUserInfo } from '@/store/slicers/userSlice'
@@ -24,7 +25,8 @@ const checkAuth = (newPathname: string): boolean => {
     return true
   }
   const { tabKey: currentKey } = getKeyName(newPathname)
-  return isAuthorized(currentKey)
+  // return isAuthorized(currentKey)
+  return true
 }
 
 interface PanesItemProps {

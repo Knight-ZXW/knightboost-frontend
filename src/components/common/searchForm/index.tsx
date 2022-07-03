@@ -2,13 +2,19 @@ import React, { forwardRef, useImperativeHandle, FC } from 'react'
 import { Form, Button } from 'antd'
 
 interface SearchProps {
-  config: object[];
-  handleSearch: (arg0?: object) => void;
-  ref: RefType;
-  beforeSearch?: (arg0?: object) => void;
-  onFieldsChange?: (arg0?: unknown, arg1?: unknown) => void;
+  config: object[]
+  handleSearch: (arg0?: object) => void
+  ref: RefType
+  beforeSearch?: (arg0?: object) => void
+  onFieldsChange?: (arg0?: unknown, arg1?: unknown) => void
 }
 
+/**
+ * React.forwardRef 会创建 一个React 组件，这个组件能够将其接收的ref属性
+ * 转发到其组件树下的另一个组件中，这种技术并不常见，但在以下两种场景中特别有用：
+ *  1.转发 refs 到 DOM 组件
+ *  2.在高阶组件中转发 refs
+ */
 const SearchForm: FC<SearchProps> = forwardRef(
   (props: SearchProps, ref: RefType) => {
     const { config, handleSearch, beforeSearch, onFieldsChange } = props
@@ -42,10 +48,11 @@ const SearchForm: FC<SearchProps> = forwardRef(
       {}
     )
 
+    // 实现渲染的父组件 可以调动 ref.current.resetFields
     useImperativeHandle(ref, () => ({
       // 重置搜索字段
-      resetFields(field: string[]) {
-        return field ? form.resetFields([...field]) : form.resetFields()
+      resetFields(fields: string[]) {
+        return fields ? form.resetFields([...fields]) : form.resetFields()
       }
     }))
 

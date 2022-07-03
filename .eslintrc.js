@@ -51,7 +51,8 @@ module.exports = {
     ],
     'no-use-before-define': ['off', { functions: false }],
     // 'no-use-before-define': ['error', { functions: false }],
-    'prettier/prettier': ['error', { parser: 'typescript' }]
+    'prettier/prettier': ['error', { parser: 'typescript' }],
+    'jsx-a11y/anchor-is-valid': 0
   },
   overrides: [
     {

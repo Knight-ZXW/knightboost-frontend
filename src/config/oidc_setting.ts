@@ -5,7 +5,7 @@ import {
   UserManagerSettings,
   WebStorageStateStore
 } from 'oidc-client'
-import { UserInfo } from '@/app_models/user'
+import { UserInfo } from '@/types/user'
 
 class Constants {
   public static stsAuthority = process.env.REACT_APP_STS_URI as string // sts服务器

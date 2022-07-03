@@ -4,11 +4,11 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import $axios from '@/utils/axios'
 
 interface Props {
-  onChange?: (arg0: string) => void;
-  value?: string;
-  accept?: string[];
-  size?: number;
-  action?: string;
+  onChange?: (arg0: string) => void
+  value?: string
+  accept?: string[]
+  size?: number
+  action?: string
 }
 
 const MyUpload: FC<Props> = (props) => {

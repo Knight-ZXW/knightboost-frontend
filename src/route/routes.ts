@@ -1,11 +1,11 @@
 import {
-  HomeOutlined,
-  BankOutlined,
-  UserOutlined,
+  ApiOutlined,
   AuditOutlined,
+  BankOutlined,
   DashboardOutlined,
+  HomeOutlined,
   InfoCircleOutlined,
-  ApiOutlined
+  UserOutlined
 } from '@ant-design/icons'
 import Home from '@/pages/home'
 import Workspace from '@/pages/home/Workspace'
@@ -20,7 +20,26 @@ import AuthTest from '@/pages/test'
 import { MenuRoute } from '@/route/types'
 // import React from 'react'
 // import { Icon } from '@iconify/react'
+import MainDashboard from '@/pages/monitors/MainDashboard'
 import { TestApiLoad } from './TempTestRouteComponent'
+
+// eslint-disable-next-line no-unused-vars
+const apmRoutes: MenuRoute = {
+  path: '/apm',
+  name: '性能监控',
+  key: 'apm',
+  type: 'subMenu',
+  icon: HomeOutlined,
+  routes: [
+    {
+      path: '/mainDashboard',
+      name: '概览',
+      exact: true,
+      key: 'apm:mainDashboard',
+      component: MainDashboard
+    }
+  ]
+}
 
 /**
  * path 跳转的路径
@@ -35,6 +54,22 @@ const preDefinedRoutes: MenuRoute[] = [
     key: 'home',
     icon: HomeOutlined,
     component: Home
+  },
+  {
+    path: '/apm',
+    name: '性能监控',
+    key: 'apm',
+    type: 'subMenu',
+    icon: HomeOutlined,
+    routes: [
+      {
+        path: '/apm/mainDashboard',
+        key: 'apm:main:dashboard',
+        name: '概览',
+        exact: true,
+        component: MainDashboard
+      }
+    ]
   },
   {
     path: '/workspace',
