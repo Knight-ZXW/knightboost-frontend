@@ -217,44 +217,42 @@ const TabPanes: FC<Props> = (props) => {
   const isDisabled = () => selectedPanel.key === 'home'
   // tab右击菜单
   const menu = (
-    <Menu>
-      <Menu.Item
-        key="1"
-        onClick={() => refreshTab()}
-        disabled={selectedPanel.path !== fullPath}
-      >
-        刷新
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={(e) => {
-          e.domEvent.stopPropagation()
-          remove(selectedPanel.key)
-        }}
-        disabled={isDisabled()}
-      >
-        关闭
-      </Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={(e) => {
-          e.domEvent.stopPropagation()
-          removeAll()
-        }}
-      >
-        关闭其他
-      </Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={(e) => {
-          e.domEvent.stopPropagation()
-          removeAll(true)
-        }}
-        disabled={isDisabled()}
-      >
-        全部关闭
-      </Menu.Item>
-    </Menu>
+    <Menu
+      items={[
+        {
+          label: '刷新',
+          key: '1',
+          onClick: () => refreshTab(),
+          disabled: selectedPanel.path !== fullPath
+        },
+        {
+          label: '关闭',
+          key: '2',
+          onClick: (e) => {
+            e.domEvent.stopPropagation()
+            remove(selectedPanel.key)
+          },
+          disabled: isDisabled()
+        },
+        {
+          label: '关闭其他',
+          key: '3',
+          onClick: (e) => {
+            e.domEvent.stopPropagation()
+            removeAll()
+          }
+        },
+        {
+          label: '全部关闭',
+          key: '4',
+          onClick: (e) => {
+            e.domEvent.stopPropagation()
+            removeAll(true)
+          },
+          disabled: isDisabled()
+        }
+      ]}
+    />
   )
   // 阻止右键默认事件
   const preventDefault = (e: CommonObjectType, panel: object) => {

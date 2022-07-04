@@ -8,7 +8,7 @@
     "@reduxjs/toolkit": "^1.8.0",
     "@types/crypto-js": "^4.1.1",
     "ali-oss": "^6.7.0",
-    "antd": "4.2.0",
+    "antd": "4.21.5",
     "axios": "^0.26.0",
     "axios-retry": "^3.2.5",
     "braft-editor": "^2.3.8",

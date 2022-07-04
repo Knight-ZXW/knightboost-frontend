@@ -1,11 +1,11 @@
-import React, { useState, useEffect, FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Menu, Dropdown, Layout } from 'antd'
+import { Dropdown, Layout, Menu, MenuProps } from 'antd'
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  CheckOutlined,
   LoadingOutlined,
-  CheckOutlined
+  MenuFoldOutlined,
+  MenuUnfoldOutlined
 } from '@ant-design/icons'
 import Breadcrumb from '@/components/common/breadcrumb'
 import { Icon } from '@iconify/react'
@@ -48,48 +48,46 @@ const Header: FC = () => {
     dispatch(setTheme(themes))
   }
 
-  const menu = (
-    <Menu>
-      <Menu.Item onClick={logout}>
-        <span className="ant-btn-link">退出登录</span>
-        {loading && <LoadingOutlined />}
-      </Menu.Item>
-    </Menu>
-  )
-  const setting = (
-    <Menu>
-      <Menu.Item>
-        布局
-        <div>
-          <div className={style.layoutCheckIndicator}>
-            <Icon
-              className="block flex-1 btn ant-btn-link"
-              icon="tabler:layout-navbar"
-              rotate={3}
-              fontSize={36}
-              color="gray"
-              onClick={() => dispatch(setMenuMode('vertical'))}
-            />
-            <CheckOutlined
-              className={menuMode === 'vertical' && style.checkboxItem}
-            />
-          </div>
-          <div className={style.layoutCheckIndicator}>
-            <Icon
-              className="block flex-1"
-              icon="tabler:layout-navbar"
-              fontSize={36}
-              color="gray"
-              onClick={() => dispatch(setMenuMode('horizontal'))}
-            />
-            <CheckOutlined
-              className={menuMode === 'horizontal' && style.checkboxItem}
-            />
-          </div>
-        </div>
-      </Menu.Item>
-    </Menu>
-  )
+  // const rightMenuItems: MenuProps['items'] = [
+  //   <Menu.Item onClick={logout}>
+  //     <span className="ant-btn-link">退出登录</span>
+  //     {loading && <LoadingOutlined />}
+  //   </Menu.Item>
+  // ]
+
+  const rightMenuItems: MenuProps['items'] = [
+    {
+      label: '退出登录',
+      key: 'logOut',
+      onClick: logout,
+      icon: loading && <LoadingOutlined />
+    }
+  ]
+  const menu = <Menu items={rightMenuItems} />
+
+  const layoutMenuItems: MenuProps['items'] = [
+    {
+      label: '布局方式',
+      key: 'layoutType',
+      children: [
+        {
+          label: '并排布局',
+          key: 'alignLayout',
+          onClick: () => {
+            dispatch(setMenuMode('vertical'))
+          }
+        },
+        {
+          label: '头部布局',
+          key: 'topLayout',
+          onClick: () => {
+            dispatch(setMenuMode('horizontal'))
+          }
+        }
+      ]
+    }
+  ]
+  const setting = <Menu items={layoutMenuItems} />
 
   const toggle = (): void => {
     setCollapsed(!collapsed)

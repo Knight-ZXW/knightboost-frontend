@@ -11,6 +11,7 @@ import 'moment/locale/zh-cn'
 import { loadOidcUser } from '@/config/oidc_setting'
 import { setUserInfo } from '@/store/slicers/userSlice'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import App from './App'
 import './i18n'
 import '@/assets/css/public.less' // 官方全部样式 ,但是可以通过变量控制
@@ -57,13 +58,15 @@ appReady.then(async () => {
   )
 
   ReactDOM.render(
-    <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ConfigProvider locale={zhCN}>
-          <App />
-        </ConfigProvider>
-      </PersistGate>
-    </ReduxProvider>,
+    <ErrorBoundary>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ConfigProvider locale={zhCN}>
+            <App />
+          </ConfigProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </ErrorBoundary>,
     document.getElementById('root')
   )
 })

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Select } from 'antd'
 import { ResolutionStatus } from '@/types/group'
 
@@ -8,6 +8,7 @@ interface GroupState {
   label: string
   value: ResolutionStatus
 }
+
 const groupStateOptions = [
   {
     label: '未处理',
@@ -22,20 +23,30 @@ const groupStateOptions = [
     value: ResolutionStatus.IGNORED
   }
 ]
+
 interface GroupStateProps {
   status: ResolutionStatus
 }
 
 const GroupStateSelect: FC<GroupStateProps> = (props) => {
-  const options = groupStateOptions.map((d) => (
-    <Option key={d.value} value={d.value}>
-      {d.label}
-    </Option>
-  ))
+  const { status } = props
+  const defaultValue = groupStateOptions.find((item) => item.value === status)
+  console.log('defaultValue is ', defaultValue)
+
+  // const [status, setStatus] = useState(defaultStatus)
+
+  const handleChange = (value: { value: string; label: React.ReactNode }) => {
+    console.log(value) // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+    // setStatus(ResolutionStatus[value.value])
+  }
 
   return (
-    <Select size="small" style={{ width: '120px' }} value={props.status}>
-      {options}
+    <Select size="small" style={{ width: '120px' }} onChange={handleChange}>
+      {groupStateOptions.map((d) => (
+        <Option key={d.value} value={d.value}>
+          {d.label}
+        </Option>
+      ))}
     </Select>
   )
 }
