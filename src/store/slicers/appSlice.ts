@@ -9,7 +9,7 @@ export interface AppState {
 
 const initialState: AppState = {
   collapsed: false,
-  theme: 'dark',
+  theme: 'custom-default',
   menuMode: 'horizontal'
 }
 

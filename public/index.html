@@ -5,7 +5,6 @@
   <meta charset="utf-8"/>
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#000000"/>
   <meta data-n-head="ssr" name="renderer" content="webkit">
   <meta data-n-head="ssr" http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="description" content="React-Antd多页签模板管理后台"/>
@@ -29,22 +28,9 @@
 
 <body>
 <!-- 主题 -->
-<link type="text/css" rel="stylesheet/less" href="/color.less">
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root">
   <style>
-    body, html {
-      background-color: #222f3e;
-    }
-
-    html[data-theme='dark'] {
-      background-color: #222f3e;
-    }
-
-    html[data-theme='dark'] .app-loading .app-loading-title {
-      color: rgb(255 255 255 / 85%);
-    }
-
     .app-loading {
       display: flex;
       width: 100%;
@@ -53,7 +39,7 @@
       align-items: center;
       flex-direction: column;
       /*background-color: #f4f7f9;*/
-      background-color: #222f3e;
+      /*background-color: #222f3e;*/
     }
 
     .app-loading .app-loading-wrap {
@@ -174,14 +160,7 @@
   </div>
 </div>
 <script>
-  // 切换为当前主题. 挂载 style节点,预定义的 less:color(被 less.min.js 监听处理为普通css)
-  const themeStyle = localStorage.getItem('themeStyle')
-  if (themeStyle) {
-    const styles = document.createElement('style')
-    styles.id = 'less:color'
-    styles.innerText = themeStyle
-    document.body.appendChild(styles)
-  }
+
 </script>
 <!--
     This HTML file is a template.

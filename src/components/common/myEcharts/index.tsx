@@ -10,7 +10,7 @@ interface Props {
 
 const MyEcharts: FC<Props> = ({ option = {}, style = {} }) => {
   const theme = useAppSelector(selectTheme)
-  const themeColor = theme === 'default' ? {} : { theme: 'dark' }
+  const themeColor = theme === 'custom-default' ? {} : { theme: 'dark' }
   const options = {
     ...option,
     grid: {

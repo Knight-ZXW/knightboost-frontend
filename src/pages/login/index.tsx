@@ -91,7 +91,7 @@ const LoginForm: FC = () => {
     </Form>
   )
 
-  const floatColor = theme === 'default' ? '24,144,255' : '110,65,255'
+  const floatColor = theme === 'custom-default' ? '24,144,255' : '110,65,255'
   return (
     <div className="login-layout" id="login-layout">
       <ReactCanvasNest

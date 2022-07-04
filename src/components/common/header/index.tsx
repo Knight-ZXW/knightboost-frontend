@@ -33,7 +33,6 @@ const Header: FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [loading, setLoading] = useState(false)
   const logout = async () => {
-    console.log('user 登出', userInfo)
     if (userInfo.is_oidc_user) {
       setLoading(true)
       await oidcLogout()
@@ -96,24 +95,25 @@ const Header: FC = () => {
 
   // 更换主题
   useEffect(() => {
-    if (theme === 'default') {
-      // 通过挂载 预定义的postcss less.min.js 来处于 挂载预定义的color.less
-      const script = document.createElement('script')
-      script.id = 'themeJs'
-      script.src = '/less.min.js'
-      document.body.appendChild(script)
-
-      setTimeout(() => {
-        const themeStyle = document.getElementById('less:color')
-        if (themeStyle) localStorage.setItem('themeStyle', themeStyle.innerText)
-      }, 500)
+    if (theme === 'custom-default') {
+      // localStorage.setItem('themeStyle', 'themeStyle.innerText')
+      // // 通过挂载 预定义的postcss less.min.js 来处于 挂载预定义的color.less
+      // const script = document.createElement('script')
+      // script.id = 'themeJs'
+      // script.src = '/less.min.js'
+      // document.body.appendChild(script)
+      //
+      // setTimeout(() => {
+      //   const themeStyle = document.getElementById('less:color')
+      //   if (themeStyle) localStorage.setItem('themeStyle', themeStyle.innerText)
+      // }, 500)
     } else {
-      // 深色主题: 移除自定义主题 style 节点和 script.src=themeJs 节点. 深色主题见
-      const themeJs = document.getElementById('themeJs')
-      const themeStyle = document.getElementById('less:color')
-      if (themeJs) themeJs.remove()
-      if (themeStyle) themeStyle.remove()
-      localStorage.removeItem('themeStyle')
+      // // 深色主题: 移除自定义主题 style 节点和 script.src=themeJs 节点. 深色主题见
+      // const themeJs = document.getElementById('themeJs')
+      // const themeStyle = document.getElementById('less:color')
+      // if (themeJs) themeJs.remove()
+      // if (themeStyle) themeStyle.remove()
+      // localStorage.removeItem('themeStyle')
     }
   }, [theme])
 
@@ -140,7 +140,7 @@ const Header: FC = () => {
       {/* 右上角 */}
       <Dropdown className={`fr ${style.content}`} overlay={menu}>
         <span className={style.user}>
-          <span className="avart">{firstWord}</span>
+          <span className="avatar">{firstWord}</span>
           <span>{username}</span>
         </span>
       </Dropdown>
@@ -155,7 +155,10 @@ const Header: FC = () => {
             theme === 'default' ? '' : style.themeSwitchDark
           }`}
           title="更换主题"
-          onClick={() => changeTheme(theme === 'default' ? 'dark' : 'default')}
+          onClick={() =>
+            changeTheme(
+              theme === 'custom-default' ? 'custom-dark' : 'custom-default'
+            )}
         >
           <div className={style.themeSwitchInner} />
           <Icon icon="emojione:sun" />

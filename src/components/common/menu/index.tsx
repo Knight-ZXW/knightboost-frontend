@@ -25,7 +25,6 @@ interface MenuProps {
 const MenuView: FC<MenuProps> = ({ menuMode }) => {
   const userInfo = useAppSelector(selectUserInfo)
   const collapsed = useAppSelector(selectCollapsed)
-  const theme = useAppSelector(selectTheme)
   const { pathname } = useLocation()
   const { tabKey: curKey = 'home' } = getKeyName(pathname)
   const [current, setCurrent] = useState(curKey)
@@ -129,7 +128,6 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
             mode="horizontal"
             onClick={handleClick}
             selectedKeys={[current]}
-            theme={theme === 'default' ? 'light' : 'dark'}
           >
             {renderMenuMap(menus)}
           </Menu>
@@ -154,7 +152,6 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
         mode="inline"
         onClick={handleClick}
         selectedKeys={[current]}
-        theme={theme === 'default' ? 'light' : 'dark'}
       >
         {renderMenuMap(menus)}
       </Menu>

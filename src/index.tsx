@@ -14,6 +14,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import App from './App'
 import './i18n'
+import 'antd/dist/antd.css' // antd默认样式文件
+import './custom-default.css'
+import './custom-dark.css'
 import '@/assets/css/public.less' // 官方全部样式 ,但是可以通过变量控制
 import '@/utils'
 import './index.css'
@@ -56,12 +59,12 @@ appReady.then(async () => {
   await loadOidcUser(
     (provided) => provided && store.dispatch(setUserInfo(provided))
   )
-
+  // const theme = useAppSelector(selectTheme)
   ReactDOM.render(
     <ErrorBoundary>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ConfigProvider locale={zhCN}>
+          <ConfigProvider locale={zhCN} prefixCls="custom-default">
             <App />
           </ConfigProvider>
         </PersistGate>
