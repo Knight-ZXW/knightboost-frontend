@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Select } from 'antd'
 import { ResolutionStatus } from '@/types/group'
 
@@ -25,23 +25,31 @@ const groupStateOptions = [
 ]
 
 interface GroupStateProps {
-  status: ResolutionStatus
+  curStatus: ResolutionStatus
 }
 
 const GroupStateSelect: FC<GroupStateProps> = (props) => {
-  const { status } = props
-  const defaultValue = groupStateOptions.find((item) => item.value === status)
-  console.log('defaultValue is ', defaultValue)
+  const { curStatus } = props
 
-  // const [status, setStatus] = useState(defaultStatus)
+  function getOptionValue(status) {
+    return groupStateOptions.find((item) => item.value === status)
+  }
 
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    console.log(value) // { value: "lucy", key: "lucy", label: "Lucy (101)" }
-    // setStatus(ResolutionStatus[value.value])
+  const [status, setStatus] = useState(curStatus)
+
+  const defaultValue = getOptionValue(curStatus)
+
+  const handleChange = (value) => {
+    setStatus(value)
   }
 
   return (
-    <Select size="small" style={{ width: '120px' }} onChange={handleChange}>
+    <Select
+      size="small"
+      style={{ width: '120px' }}
+      value={getOptionValue(status)}
+      onChange={handleChange}
+    >
       {groupStateOptions.map((d) => (
         <Option key={d.value} value={d.value}>
           {d.label}

@@ -117,12 +117,6 @@ const Home: FC = () => {
       onContextMenu={(e) => e.preventDefault()}
       style={{ display: pathname.includes('/login') ? 'none' : 'flex' }}
     >
-      {/* <Layout.Sider>
-            <Logo>
-            <Menu>
-              {renderMenuMap(menus)} 通过.content & collapsed 切换 layout 布局
-            </Menu>
-      */}
       <MenuView menuMode={menuMode} />
       <Layout
         className={classNames(styles.content, {

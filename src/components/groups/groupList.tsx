@@ -5,9 +5,7 @@ import MyTable from '@/components/common/table'
 import { getGroups } from '@/api/apm'
 import GroupStateSelect from '@/components/issue/GroupStateSelect'
 
-interface GroupListProps {
-  groups: BaseGroup[]
-}
+interface GroupListProps {}
 
 const columns = [
   {
@@ -34,7 +32,7 @@ const columns = [
     title: '状态',
     dataIndex: 'status',
     key: 'status',
-    render: (status) => <GroupStateSelect status={status} />
+    render: (status) => <GroupStateSelect curStatus={status} />
   },
 
   {
@@ -45,7 +43,6 @@ const columns = [
 ]
 
 const GroupList: FC<GroupListProps> = (props) => {
-  const { groups } = props
   return (
     <div>
       {/* <Table columns={columns} dataSource={groups} /> */}

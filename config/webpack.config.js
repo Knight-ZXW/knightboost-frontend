@@ -13,6 +13,7 @@ const BundleAnalyzerPlugin =
 const webpack = require('webpack')
 const path = require('path')
 const darkThemeVars = require('antd/dist/dark-theme')
+const defaultThemeVars = require('antd/dist/default-theme')
 const { addReactRefresh } = require('customize-cra-react-refresh')
 // 分析打包大小
 const addAnalyze = () => (config) => {
@@ -87,7 +88,7 @@ module.exports = override(
         hack: `true;@import "${require.resolve(
           'antd/lib/style/color/colorPalette.less'
         )}";`,
-        ...darkThemeVars,
+        ...defaultThemeVars,
         '@primary-color': '#6e41ff', // 'primary-color': '#1DA57A', // 无效
         '@link-color': '#1DA57A'
       },

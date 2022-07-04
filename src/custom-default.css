@@ -15301,7 +15301,7 @@ textarea.custom-default-input-number {
   padding: 0 50px;
   color: rgba(0, 0, 0, 0.85);
   line-height: 64px;
-  background: #001529;
+  background: #ffffff;
 }
 .custom-default-layout-footer {
   padding: 24px 50px;
@@ -15318,7 +15318,7 @@ textarea.custom-default-input-number {
   position: relative;
   /* fix firefox can't set width smaller than content on flex item */
   min-width: 0;
-  background: #001529;
+  background: #ffffff;
   transition: all 0.2s;
 }
 .custom-default-layout-sider-children {
@@ -15361,7 +15361,7 @@ textarea.custom-default-input-number {
   font-size: 18px;
   line-height: 42px;
   text-align: center;
-  background: #001529;
+  background: #ffffff;
   border-radius: 0 2px 2px 0;
   cursor: pointer;
   transition: background 0.3s ease;

@@ -14,7 +14,7 @@ const MainDashboard: FC = () => {
   }, [pageListReq])
   return (
     <div className="container">
-      <GroupList groups={groups} />
+      <GroupList />
       <div className="flex justify-between">
         <div>
           <Card>
