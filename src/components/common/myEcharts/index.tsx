@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
 import ReactEcharts from 'echarts-for-react'
-import { useAppSelector } from '@/store/redux-hooks'
-import { selectTheme } from '@/store/slicers/appSlice'
 
 interface Props {
   option: object
@@ -9,8 +7,6 @@ interface Props {
 }
 
 const MyEcharts: FC<Props> = ({ option = {}, style = {} }) => {
-  const theme = useAppSelector(selectTheme)
-  const themeColor = theme === 'custom-default' ? {} : { theme: 'dark' }
   const options = {
     ...option,
     grid: {
@@ -20,7 +16,7 @@ const MyEcharts: FC<Props> = ({ option = {}, style = {} }) => {
       bottom: '8%'
     }
   }
-  return <ReactEcharts option={options} {...themeColor} style={style} />
+  return <ReactEcharts option={options} style={style} />
 }
 
 export default MyEcharts

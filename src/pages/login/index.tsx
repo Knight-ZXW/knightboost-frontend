@@ -10,13 +10,11 @@ import { OidcLogin } from '@/pages/login/OidcLogin'
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks'
 import { selectUserInfo, setUserInfo } from '@/store/slicers/userSlice'
 import { setTabs } from '@/store/slicers/tabSlice'
-import { selectTheme } from '@/store/slicers/appSlice'
 import { userRes } from '@/mocks/authentication_mock'
 
 const LoginForm: FC = () => {
   const dispatch = useAppDispatch()
   const userInfo = useAppSelector(selectUserInfo)
-  const theme = useAppSelector(selectTheme)
   const history = useHistory()
   useEffect(() => {
     const { token } = userInfo
@@ -91,7 +89,7 @@ const LoginForm: FC = () => {
     </Form>
   )
 
-  const floatColor = theme === 'custom-default' ? '24,144,255' : '110,65,255'
+  const floatColor = '24,144,255'
   return (
     <div className="login-layout" id="login-layout">
       <ReactCanvasNest

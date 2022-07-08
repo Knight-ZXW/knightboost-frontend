@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Dropdown, Layout, Menu, MenuProps } from 'antd'
 import {
-  CheckOutlined,
   LoadingOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined
@@ -13,10 +12,8 @@ import { oidcLogout } from '@/config/oidc_setting'
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks'
 import { selectUserInfo, setUserInfo } from '@/store/slicers/userSlice'
 import {
-  selectTheme,
   setCollapsed as setCollapsedGlobal,
-  setMenuMode,
-  setTheme
+  setMenuMode
 } from '@/store/slicers/appSlice'
 
 import classNames from 'classnames'
@@ -24,7 +21,6 @@ import style from './Header.module.less'
 
 const Header: FC = () => {
   const dispatch = useAppDispatch()
-  const theme = useAppSelector(selectTheme)
   const userInfo = useAppSelector(selectUserInfo)
   const menuMode = useAppSelector((state) => state.app.menuMode)
   const history = useHistory()
@@ -41,10 +37,6 @@ const Header: FC = () => {
       dispatch(setUserInfo({}))
       history.replace({ pathname: '/login' })
     }
-  }
-
-  const changeTheme = (themes: string) => {
-    dispatch(setTheme(themes))
   }
 
   // const rightMenuItems: MenuProps['items'] = [
@@ -93,30 +85,6 @@ const Header: FC = () => {
     dispatch(setCollapsedGlobal(!collapsed))
   }
 
-  // 更换主题
-  useEffect(() => {
-    if (theme === 'custom-default') {
-      // localStorage.setItem('themeStyle', 'themeStyle.innerText')
-      // // 通过挂载 预定义的postcss less.min.js 来处于 挂载预定义的color.less
-      // const script = document.createElement('script')
-      // script.id = 'themeJs'
-      // script.src = '/less.min.js'
-      // document.body.appendChild(script)
-      //
-      // setTimeout(() => {
-      //   const themeStyle = document.getElementById('less:color')
-      //   if (themeStyle) localStorage.setItem('themeStyle', themeStyle.innerText)
-      // }, 500)
-    } else {
-      // // 深色主题: 移除自定义主题 style 节点和 script.src=themeJs 节点. 深色主题见
-      // const themeJs = document.getElementById('themeJs')
-      // const themeStyle = document.getElementById('less:color')
-      // if (themeJs) themeJs.remove()
-      // if (themeStyle) themeStyle.remove()
-      // localStorage.removeItem('themeStyle')
-    }
-  }, [theme])
-
   return (
     <Layout.Header
       className={classNames(style.header, {
@@ -149,22 +117,6 @@ const Header: FC = () => {
           <Icon icon="emojione:gear" color="blue" />
         </span>
       </Dropdown>
-      <div className={`fr ${style.themeSwitchWrapper}`}>
-        <div
-          className={`${style.themeSwitch} ${
-            theme === 'default' ? '' : style.themeSwitchDark
-          }`}
-          title="更换主题"
-          onClick={() =>
-            changeTheme(
-              theme === 'custom-default' ? 'custom-dark' : 'custom-default'
-            )}
-        >
-          <div className={style.themeSwitchInner} />
-          <Icon icon="emojione:sun" />
-          <Icon icon="bi:moon-stars-fill" color="#ffe62e" />
-        </div>
-      </div>
       <div className={`fr ${style.content}`}>
         <a
           href="https://github.com/hsl947/react-antd-multi-tabs-admin"

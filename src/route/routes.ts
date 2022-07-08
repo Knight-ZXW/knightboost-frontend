@@ -22,6 +22,7 @@ import { MenuRoute } from '@/route/types'
 // import { Icon } from '@iconify/react'
 import MainDashboard from '@/pages/monitors/MainDashboard'
 import { TestApiLoad } from './TempTestRouteComponent'
+import {CrashDashBoard} from "@/module/apm/pages/crash/crashDashBoard";
 
 // eslint-disable-next-line no-unused-vars
 const apmRoutes: MenuRoute = {
@@ -37,6 +38,13 @@ const apmRoutes: MenuRoute = {
       exact: true,
       key: 'apm:mainDashboard',
       component: MainDashboard
+    },
+    {
+      path: '/crash-dashboard',
+      key: 'crash:dashboard',
+      name: 'Crash异常',
+      exact: true,
+      component: CrashDashBoard
     }
   ]
 }
@@ -55,22 +63,7 @@ const preDefinedRoutes: MenuRoute[] = [
     icon: HomeOutlined,
     component: Home
   },
-  {
-    path: '/apm',
-    name: '性能监控',
-    key: 'apm',
-    type: 'subMenu',
-    icon: HomeOutlined,
-    routes: [
-      {
-        path: '/apm/mainDashboard',
-        key: 'apm:main:dashboard',
-        name: '概览',
-        exact: true,
-        component: MainDashboard
-      }
-    ]
-  },
+  apmRoutes,
   {
     path: '/workspace',
     name: '工作台',
@@ -87,7 +80,6 @@ const preDefinedRoutes: MenuRoute[] = [
     key: 'user',
     type: 'subMenu',
     icon: UserOutlined,
-    iconfont: 'icon-xiaoshouzongjian',
     routes: [
       {
         path: '/user/list',

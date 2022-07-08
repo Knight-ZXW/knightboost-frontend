@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { MLApiClient } from '@/apiclient'
 import { BaseGroup, ResolutionStatus } from '@/types/group'
-import { UpdateGroupStatus } from '@/types/dto/group'
+import {UpdateGroupStatus} from "@/types/apm/dto/group";
 
 export default {
   a: Number

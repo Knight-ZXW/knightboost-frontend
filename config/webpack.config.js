@@ -12,7 +12,6 @@ const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const webpack = require('webpack')
 const path = require('path')
-const darkThemeVars = require('antd/dist/dark-theme')
 const defaultThemeVars = require('antd/dist/default-theme')
 const { addReactRefresh } = require('customize-cra-react-refresh')
 // 分析打包大小
@@ -88,9 +87,7 @@ module.exports = override(
         hack: `true;@import "${require.resolve(
           'antd/lib/style/color/colorPalette.less'
         )}";`,
-        ...defaultThemeVars,
-        '@primary-color': '#6e41ff', // 'primary-color': '#1DA57A', // 无效
-        '@link-color': '#1DA57A'
+        ...defaultThemeVars
       },
       modules: {
         localIdentName: '[local]--[hash:base64:5]' // use less-modules
@@ -101,17 +98,4 @@ module.exports = override(
     require('tailwindcss')('./tailwind.config.js') // 默认路径为根目录/tailwind.config.js, 此处可以不指定
     // require('autoprefixer') // 需要兼容性处理 https://github.com/postcss/postcss/wiki/PostCSS-8-for-end-users
   ])
-  // adjustStyleLoaders(({ use: [, css, postcss, resolve, processor] }) => {
-  //   css.options.sourceMap = true // css-loader
-  //   postcss.options.sourceMap = true // postcss-loader
-  //   // when enable pre-processor,
-  //   // resolve-url-loader will be enabled too
-  //   if (resolve) {
-  //     resolve.options.sourceMap = true // resolve-url-loader
-  //   }
-  //   // pre-processor
-  //   if (processor && processor.loader.includes('less-loader')) {
-  //     processor.options.sourceMap = true // less-loader
-  //   }
-  // })
 )

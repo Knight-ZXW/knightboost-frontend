@@ -17,6 +17,8 @@
     "crypto-js": "^4.1.1",
     "echarts": "^4.7.0",
     "echarts-for-react": "^2.0.15-beta.1",
+    "g2": "^2.3.13",
+    "g2plot": "^0.0.1-beta.1",
     "i18next": "^21.8.10",
     "i18next-browser-languagedetector": "^6.1.4",
     "i18next-http-backend": "^1.4.1",

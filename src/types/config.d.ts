@@ -7,7 +7,6 @@ import {
 import {
   ContentEnum,
   PermissionModeEnum,
-  ThemeEnum,
   RouterTransitionEnum,
   SettingButtonPositionEnum,
   SessionTimeoutProcessingEnum
@@ -28,7 +27,6 @@ export interface MenuSetting {
   menuWidth: number
   mode: MenuModeEnum
   type: MenuTypeEnum
-  theme: ThemeEnum
   topMenuAlign: 'start' | 'center' | 'end'
   trigger: TriggerEnum
   accordion: boolean
@@ -51,7 +49,6 @@ export interface HeaderSetting {
   bgColor: string
   fixed: boolean
   show: boolean
-  theme: ThemeEnum
   // Turn on full screen
   showFullScreen: boolean
   // Whether to show the lock screen

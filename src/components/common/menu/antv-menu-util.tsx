@@ -51,11 +51,19 @@ function convertToMenu(menuRoute:MenuRoute,filter:(item)=>Boolean){
     let routes = menuRoute.routes
     menuItems = routes.map(item=>convertToMenu(item,filter))
   }
-  return {
-    key:menuRoute.key,
-    label: isSubMenu? subMenuTitle(menuRoute): <Link to={menuRoute.path} >{subMenuTitle(menuRoute)}</Link>,
-    children: menuItems
+  if (menuItems.length>0){
+    return {
+      key:menuRoute.key,
+      label: isSubMenu? subMenuTitle(menuRoute): <Link to={menuRoute.path} >{subMenuTitle(menuRoute)}</Link>,
+      children: menuItems?menuItems:undefined
+    }
+  }else {
+    return  {
+      key:menuRoute.key,
+      label: isSubMenu? subMenuTitle(menuRoute): <Link to={menuRoute.path} >{subMenuTitle(menuRoute)}</Link>,
+    }
   }
+
 
 }
 

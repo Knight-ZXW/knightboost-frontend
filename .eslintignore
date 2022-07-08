@@ -8,5 +8,4 @@ src/serviceWorker.js
 react-app-env.d.ts
 /typings
 !.eslintrc.js
-echarts-dark-theme.*
 /public

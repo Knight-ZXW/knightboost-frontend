@@ -3,18 +3,13 @@ import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Layout, Menu, MenuProps } from 'antd'
 
-import MyIconFont from '@/components/common/myIconfont'
 import { flattenRoutes, getKeyName } from '@/assets/js/publicFunc'
 import menus from '@/route/routes'
 import logo from '@/assets/img/logo.png'
 import { useAppSelector } from '@/store/redux-hooks'
 import { selectUserInfo } from '@/store/slicers/userSlice'
-import { selectCollapsed, selectTheme } from '@/store/slicers/appSlice'
-import {
-  DesktopOutlined,
-  HomeOutlined,
-  PieChartOutlined
-} from '@ant-design/icons'
+import { selectCollapsed } from '@/store/slicers/appSlice'
+
 import styles from './Menu.module.less'
 import { convertToAntvMenu } from '@/components/common/menu/antv-menu-util'
 
@@ -29,24 +24,6 @@ interface MyMenuProps {
   menuMode: 'horizontal' | 'vertical'
 }
 
-type MenuItem = Required<MenuProps>['items'][number]
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group'
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type
-  } as MenuItem
-}
-
 const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   const userInfo = useAppSelector(selectUserInfo)
   const collapsed = useAppSelector(selectCollapsed)
@@ -54,6 +31,7 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   const { pathname } = useLocation()
   const { tabKey: curKey = 'home' } = getKeyName(pathname)
   const [current, setCurrent] = useState(curKey)
+  console.log('select key is ',current)
   // 获取用户权限，根据权限过滤菜单
   const { permission = [] } = userInfo
 
@@ -117,6 +95,7 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
     )
   return (
     <Layout.Sider
+      theme={"dark"}
       collapsed={collapsed}
       style={{
         overflow: 'auto',
@@ -129,6 +108,7 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
     >
       <LogLink />
       <Menu
+        theme={"dark"}
         defaultOpenKeys={showKeys}
         mode="inline"
         onClick={handleClick}

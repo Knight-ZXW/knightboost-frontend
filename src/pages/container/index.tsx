@@ -115,7 +115,6 @@ const Home: FC = () => {
   return (
     <Layout
       className={styles.container}
-      onContextMenu={(e) => e.preventDefault()}
       style={{ display: pathname.includes('/login') ? 'none' : 'flex' }}
     >
       <MenuView menuMode={menuMode} />

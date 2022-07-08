@@ -14,12 +14,11 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import App from './App'
 import './i18n'
-import 'antd/dist/antd.variable.min.css' // antd默认样式文件
-import './custom-dark.css'
-import './custom-default.css'
-import '@/assets/css/public.less' // 官方全部样式 ,但是可以通过变量控制
 import '@/utils'
 import './index.css'
+import 'antd/es/style/index.less'
+import 'antd/dist/antd.less'
+import '@/assets/css/public.less' // 官方全部样式 ,但是可以通过变量控制
 
 moment.locale('zh-cn')
 
@@ -64,7 +63,7 @@ appReady.then(async () => {
     <ErrorBoundary>
       <ReduxProvider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ConfigProvider locale={zhCN} prefixCls="custom-default">
+          <ConfigProvider locale={zhCN}>
             <App />
           </ConfigProvider>
         </PersistGate>
