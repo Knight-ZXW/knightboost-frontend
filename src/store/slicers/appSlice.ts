@@ -22,6 +22,7 @@ export const appSlice = createSlice({
       state.theme = action.payload
     },
     setCollapsed(state, action) {
+      console.log('notify collapsed', action.payload)
       state.collapsed = action.payload
     },
     setMenuMode(state, action) {

@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, MenuProps } from 'antd'
 
 import MyIconFont from '@/components/common/myIconfont'
 import { flattenRoutes, getKeyName } from '@/assets/js/publicFunc'
@@ -9,7 +10,13 @@ import logo from '@/assets/img/logo.png'
 import { useAppSelector } from '@/store/redux-hooks'
 import { selectUserInfo } from '@/store/slicers/userSlice'
 import { selectCollapsed, selectTheme } from '@/store/slicers/appSlice'
+import {
+  DesktopOutlined,
+  HomeOutlined,
+  PieChartOutlined
+} from '@ant-design/icons'
 import styles from './Menu.module.less'
+import { convertToAntvMenu } from '@/components/common/menu/antv-menu-util'
 
 const { Header } = Layout
 
@@ -18,13 +25,32 @@ const flatMenu = flattenRoutes(menus)
 
 type MenuType = CommonObjectType<string>
 
-interface MenuProps {
+interface MyMenuProps {
   menuMode: 'horizontal' | 'vertical'
 }
 
-const MenuView: FC<MenuProps> = ({ menuMode }) => {
+type MenuItem = Required<MenuProps>['items'][number]
+
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type
+  } as MenuItem
+}
+
+const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   const userInfo = useAppSelector(selectUserInfo)
   const collapsed = useAppSelector(selectCollapsed)
+
   const { pathname } = useLocation()
   const { tabKey: curKey = 'home' } = getKeyName(pathname)
   const [current, setCurrent] = useState(curKey)
@@ -58,53 +84,9 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
     setCurrent(key)
   }
 
-  // 子菜单的标题
-  const subMenuTitle = (data: MenuType): JSX.Element => {
-    const { icon: MenuIcon, iconfont } = data
-    return (
-      <div className="flex items-center">
-        {iconfont ? <MyIconFont type={iconfont} /> : !!MenuIcon && <MenuIcon />}
-        <span className={styles.noselect}>{data.name}</span>
-      </div>
-    )
-  }
-
-  // 创建可跳转的多级子菜单
-  const createMenuItem = (data: MenuType): JSX.Element => {
-    return (
-      <Menu.Item className={styles.noselect} key={data.key} title={data.name}>
-        <Link to={data.path}>{subMenuTitle(data)}</Link>
-      </Menu.Item>
-    )
-  }
-
-  // 创建可展开的第一级子菜单
-  const creatSubMenu = (data: CommonObjectType): JSX.Element => {
-    const menuItemList = []
-    data.routes.map((item: MenuType) => {
-      // TODO 开发阶段不过滤菜单
-      const arr = permission.filter((ele) => item.key === ele.code || true)
-      if (arr.length > 0) {
-        menuItemList.push(renderMenu(item))
-      }
-      return arr
-    })
-
-    return menuItemList.length > 0 ? (
-      <SubMenu key={data.key} title={subMenuTitle(data)}>
-        {menuItemList}
-      </SubMenu>
-    ) : null
-  }
-
-  // 创建菜单树
-  const renderMenuMap = (list: CommonObjectType): JSX.Element[] =>
-    list.map((item) => renderMenu(item))
-
-  // 判断是否有子菜单，渲染不同组件
-  function renderMenu(item: MenuType) {
-    return item.type === 'subMenu' ? creatSubMenu(item) : createMenuItem(item)
-  }
+  let menus3 = convertToAntvMenu(menus, (item) => {
+    return permission.filter((ele) => item.key === ele.code || true).length > 0
+  })
 
   const setDefaultKey = flatMenu
     .filter((item: MenuType) => item.type === 'subMenu')
@@ -128,9 +110,8 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
             mode="horizontal"
             onClick={handleClick}
             selectedKeys={[current]}
-          >
-            {renderMenuMap(menus)}
-          </Menu>
+            items={menus3}
+          />
         </div>
       </Header>
     )
@@ -151,10 +132,9 @@ const MenuView: FC<MenuProps> = ({ menuMode }) => {
         defaultOpenKeys={showKeys}
         mode="inline"
         onClick={handleClick}
+        items={menus3}
         selectedKeys={[current]}
-      >
-        {renderMenuMap(menus)}
-      </Menu>
+      />
     </Layout.Sider>
   )
 }

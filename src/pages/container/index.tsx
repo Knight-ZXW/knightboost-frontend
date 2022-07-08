@@ -54,6 +54,7 @@ const Home: FC = () => {
 
   const history = useHistory()
   const { pathname, search } = useLocation()
+  console.log('pathname is ', pathname)
 
   const { token } = userInfo
 
