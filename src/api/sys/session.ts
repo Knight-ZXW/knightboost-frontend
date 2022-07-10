@@ -1,5 +1,6 @@
-import $axios from '@/utils/axios'
 import { UserInfo } from '@/types/user'
+import $axios from '@/utils/axios'
+
 
 export default {
   // 获取数据

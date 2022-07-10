@@ -5,8 +5,6 @@ import { formItemLayout, wrapperCol } from '@/config/layout'
 import { closeTabAction, getQuery } from '@/assets/js/publicFunc'
 import MySelect from '@/components/common/mySelect'
 // import MyUpload from '@/components/common/myUpload'
-import Editor from '@/components/common/editor'
-
 const FormView: FC = () => {
   const query = getQuery()
   const { id } = query
@@ -101,7 +99,6 @@ const FormView: FC = () => {
             }
           ]}
         >
-          <Editor />
         </Form.Item>
         <Form.Item label="状态" name="status" valuePropName="checked">
           <Switch checkedChildren="开启" unCheckedChildren="禁用" />

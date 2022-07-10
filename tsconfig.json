@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -23,8 +24,7 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false,
-    "downlevelIteration": true,
-    "noFallthroughCasesInSwitch": true
+    "downlevelIteration": true
   },
   "rules": {
     "member-access": false,
@@ -49,5 +49,5 @@
     "dist",
     "build"
   ],
-  "extends": "./paths.json"
+  "extends": "./tsconfig.paths.json"
 }

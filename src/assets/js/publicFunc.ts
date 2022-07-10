@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { Modal } from 'antd'
-import routes from '@/route/routes'
+import { batch } from 'react-redux'
+
 import ErrorPage from '@/pages/public/errorPage'
+import routes from '@/route/routes'
 import { store } from '@/store'
 import { setReloadPath, setTabs } from '@/store/slicers/tabSlice'
-import { batch } from 'react-redux'
 
 // 通用confirm方法
 export const commonConfirm = (title: string, cb: () => void) => {
@@ -49,7 +50,7 @@ export const flattenRoutes = (arr: CommonObjectType<unknown>[]) =>
  * 根据路径获取路由的name和key
  * @param {string} path 路由
  */
-export const getKeyName = (path: string = '/403') => {
+export const getKeyName = (path = '/403') => {
   const truePath = path.split('?')[0]
   const curRoute = flattenRoutes(routes).filter(
     (item: { path: string | string[] }) => item.path.includes(truePath)
@@ -82,7 +83,7 @@ export const asyncAction = (action: unknown | void) => {
  */
 export const closeTabAction = (
   history: CommonObjectType,
-  returnUrl: string = '/',
+  returnUrl = '/',
   cb?: () => {}
 ) => {
   const { curTab } = store.getState().tab
