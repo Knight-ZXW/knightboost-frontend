@@ -16,6 +16,7 @@ const MyEcharts: FC<Props> = ({ option = {}, style = {} }) => {
       bottom: '8%'
     }
   }
+  // @ts-ignore
   return <ReactEcharts option={options} style={style} />
 }
 

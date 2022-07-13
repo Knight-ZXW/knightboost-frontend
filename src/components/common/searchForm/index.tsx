@@ -1,12 +1,12 @@
-import React, { forwardRef, useImperativeHandle, FC } from 'react'
 import { Form, Button } from 'antd'
+import React, { forwardRef, useImperativeHandle, FC } from 'react'
 
 interface SearchProps {
-  config: object[]
-  handleSearch: (arg0?: object) => void
+  config: Record<string, any>[]
+  handleSearch: (arg0: object) => void
   ref: RefType
-  beforeSearch?: (arg0?: object) => void
-  onFieldsChange?: (arg0?: unknown, arg1?: unknown) => void
+  beforeSearch?: (arg0: object) => void
+  onFieldsChange?: (arg0: unknown, arg1?: unknown) => void
 }
 
 /**
@@ -36,7 +36,9 @@ const SearchForm: FC<SearchProps> = forwardRef(
 
     const emitSearch = (values: object): void => {
       // beforeSearch用于处理一些特殊情况
-      beforeSearch(values)
+      if (beforeSearch) {
+        beforeSearch(values)
+      }
       handleSearch(values)
     }
 

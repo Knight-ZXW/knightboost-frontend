@@ -12,6 +12,7 @@ import { selectCollapsed } from '@/store/slicers/appSlice'
 
 import styles from './Menu.module.less'
 import { convertToAntvMenu } from '@/components/common/menu/antv-menu-util'
+import {MenuRoute} from "@/route/types";
 
 const { Header } = Layout
 
@@ -36,7 +37,8 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   const { permission = [] } = userInfo
 
   // 递归逐级向上获取最近一级的菜单，并高亮
-  const higherMenuKey = useCallback(
+  let higherMenuKey: (checkKey?: string, path?: string) => (string);
+  higherMenuKey = useCallback(
     (checkKey = 'home', path = pathname) => {
       if (
         checkKey === '403' ||
@@ -44,12 +46,13 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
       ) {
         return checkKey
       }
-      const higherPath = path.match(/(.*)\//g)[0].replace(/(.*)\//, '$1')
-      const { tabKey } = getKeyName(higherPath)
+      let matches =path.match(/(.*)\//g)
+      const higherPath = matches![0].replace(/(.*)\//, '$1')
+      const {tabKey} = getKeyName(higherPath)
       return higherMenuKey(tabKey, higherPath)
     },
     [pathname]
-  )
+  );
 
   useEffect(() => {
     const { tabKey } = getKeyName(pathname)
@@ -58,7 +61,7 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   }, [higherMenuKey, pathname])
 
   // 菜单点击事件
-  const handleClick = ({ key }): void => {
+  const handleClick = function ({key}:{key:string}) {
     setCurrent(key)
   }
 
@@ -67,8 +70,11 @@ const MenuView: FC<MyMenuProps> = ({ menuMode }) => {
   })
 
   const setDefaultKey = flatMenu
-    .filter((item: MenuType) => item.type === 'subMenu')
-    .reduce((prev: MenuType[], next: MenuType) => [...prev, next.key], [])
+    .filter((item: MenuRoute) => item.type === 'subMenu')
+    .map(item=>item.key as string)
+    .reduce((prev: string[], next: string) => {
+      return [...prev, next];
+    }, [])
 
   const showKeys = collapsed ? [] : setDefaultKey
   const LogLink = () => (

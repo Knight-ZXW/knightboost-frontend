@@ -47,7 +47,7 @@ export const oidcSettings: UserManagerSettings = {
   userStore: new WebStorageStateStore({ store: window.localStorage }) // default: sessionStorage:
 }
 
-export const parseJwt = (token) => {
+export const parseJwt = (token:string) => {
   const base64Url = token.split('.')[1]
   const base64 = base64Url.replace('-', '+').replace('_', '/')
   return JSON.parse(window.atob(base64))
@@ -70,7 +70,7 @@ interface OidcUser extends UserInfo {
 }
 
 // 限时函数
-const timeout = (prom, time) =>
+const timeout = (prom: { (): Promise<any>; }, time:number) =>
   Promise.race([prom(), new Promise((_r, rej) => setTimeout(rej, time))])
 
 // 转换函数

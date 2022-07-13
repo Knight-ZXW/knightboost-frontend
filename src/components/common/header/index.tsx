@@ -1,22 +1,23 @@
-import React, { FC, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Dropdown, Layout, Menu, MenuProps } from 'antd'
 import {
   LoadingOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons'
-import Breadcrumb from '@/components/common/breadcrumb'
 import { Icon } from '@iconify/react'
+import { Dropdown, Layout, Menu, MenuProps } from 'antd'
+import classNames from 'classnames'
+import React, { FC, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
+import Breadcrumb from '@/components/common/breadcrumb'
 import { oidcLogout } from '@/config/oidc_setting'
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks'
-import { selectUserInfo, setUserInfo } from '@/store/slicers/userSlice'
 import {
   setCollapsed as setCollapsedGlobal,
   setMenuMode
 } from '@/store/slicers/appSlice'
+import { selectUserInfo, setUserInfo } from '@/store/slicers/userSlice'
 
-import classNames from 'classnames'
 import style from './Header.module.less'
 
 const Header: FC = () => {

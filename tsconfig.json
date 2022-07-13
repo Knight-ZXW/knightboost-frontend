@@ -18,36 +18,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "experimentalDecorators": true,
-    "baseUrl": "src",
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false,
-    "downlevelIteration": true
-  },
-  "rules": {
-    "member-access": false,
-    "ordered-imports": false,
-    "quotemark": false,
-    "no-console": false,
-    "semicolon": false,
-    "jsx-no-lambda": false
-  },
-  "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts"
-    ]
+    "jsx": "react-jsx"
   },
   "include": [
     "src",
     "typings"
   ],
   "exclude": [
-    "node_modules",
-    "dist",
-    "build"
+    "node_modules"
   ],
   "extends": "./tsconfig.paths.json"
 }

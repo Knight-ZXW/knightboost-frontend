@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { BaseGroup } from '@/types/group'
+import {BaseGroup, ResolutionStatus} from '@/types/group'
 import { Button, Table } from 'antd'
 import MyTable from '@/components/common/table'
 import { getGroups } from '@/api/apm'
@@ -32,7 +32,7 @@ const columns = [
     title: '状态',
     dataIndex: 'status',
     key: 'status',
-    render: (status) => <GroupStateSelect curStatus={status} />
+    render: (status:ResolutionStatus) => <GroupStateSelect curStatus={status} />
   },
 
   {

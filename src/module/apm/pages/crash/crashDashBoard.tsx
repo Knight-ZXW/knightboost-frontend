@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
+
 import {
-  FilterFormContainer, FilterItem,
+  FilterFormContainer,
+  FilterItem,
   FilterItemWrapper,
   FilterRowWrapper
 } from '@/module/apm/components/filter'
@@ -13,9 +15,7 @@ export const CrashDashBoard: FC<Props> = (props) => {
     <div>
       <FilterFormContainer>
         <FilterRowWrapper>
-          <FilterItem label={"问题类型"}>
-            {'xx'}
-          </FilterItem>
+          <FilterItem label={'问题类型'}>{'xx'}</FilterItem>
         </FilterRowWrapper>
       </FilterFormContainer>
     </div>

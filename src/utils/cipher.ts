@@ -11,7 +11,7 @@ export interface EncryptionParams {
 }
 
 export class AesEncryption {
-  private key
+  private key:any
 
   private iv
 

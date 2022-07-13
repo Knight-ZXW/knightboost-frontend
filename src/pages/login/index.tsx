@@ -2,7 +2,6 @@ import React, { useEffect, FC } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Form, Input, Button, message } from 'antd'
-import ReactCanvasNest from 'react-canvas-nest'
 import './login.less'
 import Logo from '@/assets/img/logo.png'
 import session from '@/api/sys/session'
@@ -92,14 +91,6 @@ const LoginForm: FC = () => {
   const floatColor = '24,144,255'
   return (
     <div className="login-layout" id="login-layout">
-      <ReactCanvasNest
-        config={{
-          pointColor: floatColor,
-          lineColor: floatColor,
-          pointOpacity: 0.6
-        }}
-        style={{ zIndex: 1 }}
-      />
       <div className="logo-box">
         <img alt="" className="logo" src={Logo} />
         <span className="logo-name">React-Antd Multi-Tab</span>

@@ -1,3 +1,4 @@
+import {Table, TableProps} from 'antd'
 import React, {
   useState,
   forwardRef,
@@ -6,9 +7,12 @@ import React, {
   ReactNode,
   FC
 } from 'react'
-import { Table } from 'antd'
-import useService from '@/utils/tableHook'
+
 import SearchView from '@/components/common/searchForm'
+import useService from '@/utils/tableHook'
+import type { ColumnsType,} from 'antd/es/table';
+import {ColumnType, FilterValue} from "antd/lib/table/interface";
+import {SorterResult} from "antd/es/table/interface";
 
 /**
  * 封装列表、分页、多选、搜索组件
@@ -29,27 +33,30 @@ import SearchView from '@/components/common/searchForm'
  * @param {string[]} extraPagation 额外的分页大小
  */
 
-interface TableProps {
-  columns: object[]
-  apiFun: (arg0?: unknown[]) => Promise<{}>
+
+export declare type AlignType = 'left' | 'center' | 'right';
+
+interface MyTableProps {
+  columns: ColumnType<any>[]
+  apiFun: (arg0?: any) => Promise<any>
   ref?: RefType
-  searchConfigList?: object[]
-  extraProps?: object
+  searchConfigList?: Record<string, any>[]
+  extraProps?: Record<string, unknown>
   rowKey?: string
   rowClassName?: string
   small?: boolean
   showHeader?: boolean
-  extraPagation?: string[]
+  pageSizeOptions?: string[]
   beforeSearch?: (arg0?: unknown) => void
   onSelectRow?: (arg0?: string[], arg1?: string[]) => void
   onFieldsChange?: (arg0?: unknown, arg1?: unknown) => void
-  sortConfig?: (arg0?: object) => any
+  sortConfig?: (arg0?: Record<string, string>) => any
   expandedRowRender?: () => ReactNode
   onExpand?: () => void
 }
 
-const MyTable: FC<TableProps> = forwardRef(
-  (props: TableProps, ref: RefType) => {
+const MyTable: FC<MyTableProps> = forwardRef(
+  (props: MyTableProps, ref: RefType) => {
     /**
      * @forwardRef
      * 引用父组件的ref实例，成为子组件的一个参数
@@ -65,7 +72,7 @@ const MyTable: FC<TableProps> = forwardRef(
       rowClassName,
       small,
       showHeader,
-      extraPagation,
+      pageSizeOptions,
       beforeSearch,
       onSelectRow,
       onFieldsChange,
@@ -75,7 +82,7 @@ const MyTable: FC<TableProps> = forwardRef(
     } = props
 
     // 搜索参数,如果有特殊需要处理的参数，就处理
-    const searchObj = searchConfigList.reduce(
+    const searchObj = searchConfigList?.reduce(
       (prev: CommonObjectType, next: CommonObjectType) =>
         Object.assign(prev, {
           [next.key]: next.fn ? next.fn(next.initialValue) : next.initialValue
@@ -92,7 +99,7 @@ const MyTable: FC<TableProps> = forwardRef(
     }
 
     // 多选框的选择值
-    const [selectedKeys, setSelectedKeys] = useState([])
+    const [selectedKeys, setSelectedKeys] = useState<any[]>([])
     // 列表所有的筛选参数（包括搜索、分页、排序等）
     const [tableParams, setTableParams] = useState(initParams)
     // 列表搜索参数
@@ -104,7 +111,7 @@ const MyTable: FC<TableProps> = forwardRef(
     const [curPageSize, setCurPageSize] = useState(initParams.pageSize)
 
     const { loading = false, response }: CommonObjectType = useService(
-      apiFun,
+      apiFun as (arg0?: any) => Promise<{}>,
       tableParams
     )
     const { rows: tableData = [], total = -1 } = response || {}
@@ -114,6 +121,8 @@ const MyTable: FC<TableProps> = forwardRef(
       setSearchParams(val)
       setTableParams({ ...tableParams, ...val, pageNum: 1 })
     }
+
+
 
     // 重置列表部分状态
     const resetAction = (page?: number): void => {
@@ -135,7 +144,9 @@ const MyTable: FC<TableProps> = forwardRef(
       selectedRows: any[]
     ): void => {
       setSelectedKeys(selectedRowKeys)
-      onSelectRow(selectedRowKeys, selectedRows)
+      if (onSelectRow) {
+        onSelectRow(selectedRowKeys, selectedRows)
+      }
     }
     // 复选框配置
     const rowSelection = {
@@ -156,29 +167,53 @@ const MyTable: FC<TableProps> = forwardRef(
 
     // 表格和分页的大小
     const tableSize = small ? 'small' : 'middle'
-    const pagationSize = small ? 'small' : 'default'
+
+    const paginationSize = small ? 'small' : 'default'
+
 
     // 分页、筛选、排序变化时触发
-    const onTableChange = (
-      pagination: CommonObjectType,
-      filters: CommonObjectType,
-      sorter: object
-    ): void => {
+    const onChange: TableProps<any>['onChange'] = (pagination, filters, sorter, extra) => {
+      console.log('params', pagination, filters, sorter, extra);
       // 如果有sort排序并且sort参数改变时，优先排序
-      const sortObj = sortConfig ? sortConfig(sorter) : {}
-      setSortParams(sortObj)
 
-      const { current: pageNum, pageSize } = pagination
-      setCurPageNo(pageNum)
-      setCurPageSize(pageSize)
+      if (sorter instanceof Array){
+        sorter.map(item=>{item.columnKey})
+      }
+      const  pageNum = pagination.current!
+      const  pageSize = pagination.pageSize!
+
+      setCurPageNo(pageNum!)
+      setCurPageSize(pageSize!)
       setTableParams({
         ...initParams,
         ...searchParams,
-        ...sortObj,
         pageNum,
         pageSize
       })
-    }
+
+    };
+
+    // 分页、筛选、排序变化时触发
+    // const onTableChange = (
+    //   pagination: CommonObjectType,
+    //   filters: Record<string,FilterValue | null>,
+    //   sorter: Record<string, string>
+    // ): void => {
+    //   // 如果有sort排序并且sort参数改变时，优先排序
+    //   const sortObj = sortConfig ? sortConfig(sorter) : {}
+    //   setSortParams(sortObj)
+    //
+    //   const { current: pageNum, pageSize } = pagination
+    //   setCurPageNo(pageNum)
+    //   setCurPageSize(pageSize)
+    //   setTableParams({
+    //     ...initParams,
+    //     ...searchParams,
+    //     ...sortObj,
+    //     pageNum,
+    //     pageSize
+    //   })
+    // }
 
     /**
      * @useImperativeHandle
@@ -208,10 +243,12 @@ const MyTable: FC<TableProps> = forwardRef(
       }
     }))
 
+    // @ts-ignore
+    // @ts-ignore
     return (
       <div>
         {/* 搜索栏 */}
-        {searchConfigList.length > 0 && (
+        {searchConfigList && searchConfigList.length > 0 && (
           <SearchView
             ref={searchForm}
             config={searchConfigList}
@@ -228,17 +265,17 @@ const MyTable: FC<TableProps> = forwardRef(
           loading={loading}
           dataSource={tableData}
           columns={columns}
-          onChange={onTableChange}
+          onChange={onChange}
           size={tableSize}
           showHeader={showHeader}
           pagination={{
-            size: pagationSize,
+            size: paginationSize,
             total,
             pageSize: tableParams.pageSize,
             current: tableParams.pageNum,
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOptions: ['20', '50', '100', '200', ...extraPagation],
+            pageSizeOptions: pageSizeOptions?pageSizeOptions:[10,20,50,],
             showTotal: (all) => `共 ${all} 条`
           }}
         />
@@ -255,13 +292,15 @@ MyTable.defaultProps = {
   rowClassName: '',
   small: false,
   showHeader: true,
-  extraPagation: [],
+  pageSizeOptions: [],
   beforeSearch: () => {},
   onSelectRow: () => {},
   onFieldsChange: () => {},
   sortConfig: () => {},
-  expandedRowRender: null,
+  expandedRowRender: undefined,
   onExpand: () => {}
 }
+
+MyTable.displayName = 'MyTable'
 
 export default MyTable

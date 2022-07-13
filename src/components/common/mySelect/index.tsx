@@ -1,17 +1,17 @@
-import React, { FC } from 'react'
 import { Select } from 'antd'
+import React, { FC } from 'react'
 
 const { Option } = Select
 
 interface Props {
-  data: CommonObjectType<string>[];
-  placeholder?: string;
-  value?: string;
-  onChange?: (arg0: unknown) => void;
-  width?: string | number;
-  disabled?: boolean;
-  onSearch?: () => void;
-  defaultValue?: string | number;
+  data: CommonObjectType<string>[]
+  placeholder?: string
+  value?: string
+  onChange?: (arg0: unknown) => void
+  width?: string | number
+  disabled?: boolean
+  onSearch?: () => void
+  defaultValue?: string | number
 }
 
 const MySelect: FC<Props> = (props) => {

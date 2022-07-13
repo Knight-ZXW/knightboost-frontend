@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { BackTop, Layout } from 'antd'
 import { getKeyName } from '@/assets/js/publicFunc'
 import Header from '@/components/common/header'
-import TabPanes from '@/components/common/tabPanes'
+import TabPanes, {PanesItemProps} from '@/components/common/tabPanes'
 import { selectUserInfo } from '@/store/slicers/userSlice'
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks'
 import {
@@ -29,13 +29,7 @@ const checkAuth = (newPathname: string): boolean => {
   return true
 }
 
-interface PanesItemProps {
-  title: string
-  content: Component
-  key: string
-  closable: boolean
-  path: string
-}
+
 
 const Home: FC = () => {
   const userInfo = useAppSelector(selectUserInfo)
@@ -43,13 +37,7 @@ const Home: FC = () => {
   const menuMode = useAppSelector(selectMenuMode)
   const dispatch = useAppDispatch()
   const [tabActiveKey, setTabActiveKey] = useState<string>('home')
-  const [panesItem, setPanesItem] = useState<PanesItemProps>({
-    title: '',
-    content: null,
-    key: '',
-    closable: false,
-    path: ''
-  })
+  const [panesItem, setPanesItem] = useState<PanesItemProps>()
   const pathRef: RefType = useRef<string>('')
 
   const history = useHistory()
@@ -128,7 +116,7 @@ const Home: FC = () => {
         <Layout.Content>
           <TabPanes
             defaultActiveKey="home"
-            panesItem={panesItem}
+            panesItem={panesItem!}
             tabActiveKey={tabActiveKey}
           />
         </Layout.Content>

@@ -18,7 +18,7 @@ export class ApiClient {
 
   private readonly options: CreateAxiosOptions
 
-  constructor(options?: CreateAxiosOptions) {
+  constructor(options: CreateAxiosOptions) {
     this.options = options
     this.axiosInstance = axios.create(options)
     this.setupInterceptor()
@@ -122,8 +122,8 @@ export class ApiClient {
 
     this.axiosInstance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        const { ignoreCancelToken } = (config as CreateAxiosOptions)
-          .requestOptions
+        const {ignoreCancelToken} = (config as CreateAxiosOptions)
+          .requestOptions || {ignoreCancelToken: undefined}
         const ignoreCancel =
           ignoreCancelToken !== undefined
             ? ignoreCancelToken

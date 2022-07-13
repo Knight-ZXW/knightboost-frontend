@@ -6,6 +6,8 @@ import ErrorPage from '@/pages/public/errorPage'
 import routes from '@/route/routes'
 import { store } from '@/store'
 import { setReloadPath, setTabs } from '@/store/slicers/tabSlice'
+import _ from "lodash";
+import {MenuRoute} from "@/route/types";
 
 // 通用confirm方法
 export const commonConfirm = (title: string, cb: () => void) => {
@@ -28,14 +30,16 @@ export const commonConfirm = (title: string, cb: () => void) => {
 export const hidePhone = (phone: string) =>
   phone && phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 
+
+
 /**
  * 以递归的方式展平react router数组
  * @param {object[]} arr 路由数组
  * @param {string} child 需要递归的字段名
  */
-export const flattenRoutes = (arr: CommonObjectType<unknown>[]) =>
-  arr.reduce(
-    (prev: CommonObjectType<unknown>[], item: CommonObjectType<unknown>) => {
+export const flattenRoutes = (arr: MenuRoute[]):MenuRoute[] => {
+  return arr.reduce(
+    (prev: MenuRoute[], item: MenuRoute) => {
       if (Array.isArray(item.routes)) {
         prev.push(item)
       }
@@ -44,7 +48,8 @@ export const flattenRoutes = (arr: CommonObjectType<unknown>[]) =>
       )
     },
     []
-  )
+  );
+}
 
 /**
  * 根据路径获取路由的name和key
@@ -53,12 +58,14 @@ export const flattenRoutes = (arr: CommonObjectType<unknown>[]) =>
 export const getKeyName = (path = '/403') => {
   const truePath = path.split('?')[0]
   const curRoute = flattenRoutes(routes).filter(
-    (item: { path: string | string[] }) => item.path.includes(truePath)
+    (item) => {
+      return item.path.includes(truePath);
+    }
   )
   if (!curRoute[0])
     return { title: '暂无权限', tabKey: '403', component: ErrorPage }
   const { name, key, component } = curRoute[0]
-  return { title: name, tabKey: key, component }
+  return { title: name || '', tabKey: key, component }
 }
 
 /**
@@ -136,64 +143,6 @@ export const getQuery = (): CommonObjectType<string> => {
   return queryObj
 }
 
-/**
- * 深拷贝操作，简单类型的对象的可以直接用 JSON.parse(JSON.stringify())或 [...]/{...}
- * @param {object} obj 需要拷贝的对象
- */
-export const deepClone = (obj: CommonObjectType) => {
-  if (
-    obj === null ||
-    typeof obj !== 'object' ||
-    obj instanceof Date ||
-    obj instanceof Function
-  ) {
-    return obj
-  }
-  const cloneObj = Array.isArray(obj) ? [] : {}
-  Object.keys(obj).map((key) => {
-    cloneObj[key] = deepClone(obj[key])
-    return cloneObj
-  })
-  return cloneObj
-}
-
-/**
- * 获取图片地址
- * @param {*} html 富文本字符串
- */
-export const getImgsUrl = (html?: string) => {
-  // 匹配图片（g表示匹配所有结果i表示区分大小写）
-  const imgReg = /<img.*?(?:>|\/>)/gi
-  // 匹配src属性
-  const srcReg = /src=['"]?([^'"]*)['"]?/i
-  const arr = html.match(imgReg)
-  if (!arr) return null
-  // 获取图片地址
-  const urlArr = arr.reduce((prev, next) => {
-    const src = next.match(srcReg)
-    return src[1] ? [...prev, src[1]] : prev
-  }, [])
-  return urlArr
-}
-
-/**
- * 获取视频地址
- * @param {*} html 富文本字符串
- */
-export const getVideoUrl = (html?: string) => {
-  // 匹配图片（g表示匹配所有结果i表示区分大小写）
-  const imgReg = /<(video|iframe).*?(?:>|\/>)/gi
-  // 匹配src属性
-  const srcReg = /src=['"]?([^'"]*)['"]?/i
-  const arr = html.match(imgReg)
-  if (!arr) return null
-  // 获取图片地址
-  const urlArr = arr.reduce((prev, next) => {
-    const src = next.match(srcReg)
-    return src[1] ? [...prev, src[1]] : prev
-  }, [])
-  return urlArr
-}
 
 /**
  * 获取本地存储中的权限
@@ -209,55 +158,7 @@ export const isAuthorized = (val: string): boolean => {
   return !!permissions.find((_) => _.code === val)
 }
 
-/**
- * 用requestAnimationFrame替代setTimeout、setInterval，解决内存溢出
- * @export
- * @param {*} cb 定时回调
- * @param {*} interval 定时时间
- */
-export const customizeTimer = {
-  intervalTimer: null,
-  timeoutTimer: null,
-  setTimeout(cb: () => void, interval: number) {
-    // 实现setTimeout功能
-    const { now } = Date
-    const stime = now()
-    let etime = stime
-    const loop = () => {
-      this.timeoutTimer = requestAnimationFrame(loop)
-      etime = now()
-      if (etime - stime >= interval) {
-        cb()
-        cancelAnimationFrame(this.timeoutTimer)
-      }
-    }
-    this.timeoutTimer = requestAnimationFrame(loop)
-    return this.timeoutTimer
-  },
-  clearTimeout() {
-    cancelAnimationFrame(this.timeoutTimer)
-  },
-  setInterval(cb: () => void, interval: number) {
-    // 实现setInterval功能
-    const { now } = Date
-    let stime = now()
-    let etime = stime
-    const loop = () => {
-      this.intervalTimer = requestAnimationFrame(loop)
-      etime = now()
-      if (etime - stime >= interval) {
-        stime = now()
-        etime = stime
-        cb()
-      }
-    }
-    this.intervalTimer = requestAnimationFrame(loop)
-    return this.intervalTimer
-  },
-  clearInterval() {
-    cancelAnimationFrame(this.intervalTimer)
-  }
-}
+
 
 /**
  * 预览图片

@@ -11,7 +11,7 @@ const initialState: UserState = {
     username: '',
     displayName: '',
     permission: [],
-    token: null,
+    token: '',
     is_oidc_user: false
   }
 }

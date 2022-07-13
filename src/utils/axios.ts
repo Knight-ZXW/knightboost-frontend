@@ -1,7 +1,7 @@
 import Axios from 'axios'
-import { message } from 'antd'
-import { store } from '@/store'
-import { HashRouter } from 'react-router-dom'
+import {message} from 'antd'
+import {store} from '@/store'
+import {HashRouter} from 'react-router-dom'
 
 interface AxiosConfig {
   timeout: number
@@ -27,13 +27,16 @@ const clearAll = () => {
     type: 'SET_USERINFO',
     payload: {}
   })
-  router.history.replace({ pathname: '/login' })
+  router.history.replace({pathname: '/login'})
 }
 
 // 请求前拦截
 axios.interceptors.request.use(
   (req) => {
-    const { token = '' } = store.getState().user.UserInfo || {}
+    const {token = ''} = store.getState().user.UserInfo || {}
+    if (!req.headers) {
+      req.headers = {}
+    }
     req.headers.token = token
     return req
   },
@@ -46,7 +49,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response): Promise<any> => {
     // todo 应考虑在全局统一化响应数据格式.如果没有,则应移除这个拦截器
-    const { data } = response
+    const {data} = response
     if (data.results?.length) {
       return Promise.resolve({
         rows: data.results,

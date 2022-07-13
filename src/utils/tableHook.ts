@@ -10,7 +10,7 @@ export const useServiceCallback = (
 ): CommonObjectType[] => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [response, setResponse] = useState(null)
+  const [response, setResponse] = useState<any>(null)
 
   // 使用 useCallback，来判断 service 是否改变
   const callback = useCallback(
@@ -39,6 +39,7 @@ const useService = (
   const [callback, { loading, error, response }]: any[] =
     useServiceCallback(service)
   useEffect(() => {
+    console.log('发起请求')
     callback(params)
     return () => {}
   }, [callback, params])

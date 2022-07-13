@@ -1,12 +1,18 @@
 // use either bob/bob, alice/alice or your Google account
 
-import React, { useEffect, useState } from 'react'
-import { callOidcLogin, oidcSettings, userManager } from '@/config/oidc_setting'
-import { Button } from 'antd'
-import { useAppDispatch } from '@/store/redux-hooks'
-import { setUserInfo } from '@/store/slicers/userSlice'
+import React, {useEffect, useState} from 'react'
+import {callOidcLogin, oidcSettings, userManager} from '@/config/oidc_setting'
+import {Button} from 'antd'
+import {useAppDispatch} from '@/store/redux-hooks'
+import {setUserInfo} from '@/store/slicers/userSlice'
 
-export const OidcLogin = ({ loginCallback }) => {
+
+export interface Props {
+  loginCallback: () => void
+}
+
+export const OidcLogin = (props: Props) => {
+  const {loginCallback} = props
   const dispatch = useAppDispatch()
   const [state, setState] = useState('登录第三方...')
   const [loggedIn, setLoggedIn] = useState(false)

@@ -81,7 +81,7 @@ const UserList: FC = () => {
     {
       title: '操作',
       dataIndex: 'operations',
-      align: 'center',
+      align: 'center' as 'center',
       render: () => (
         <>
           {isAuthorized('user:list:edit') && (

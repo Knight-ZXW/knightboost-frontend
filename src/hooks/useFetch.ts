@@ -1,6 +1,12 @@
 import { useEffect, useReducer } from 'react'
+import { AnyAction } from 'redux'
+type FetchState = {
+  data: any,
+  loading: boolean,
+  error: any
+}
 
-function dataReducer(state, action) {
+function dataReducer(state:FetchState, action:AnyAction):FetchState {
   switch (action.type) {
     case 'loading':
       return { ...state, loading: true }
@@ -18,7 +24,7 @@ function dataReducer(state, action) {
  * and data states. Feel free to replace this with your request issuing client
  * (i.e. axios, react-query, Apollo).
  */
-export function useFetch(url, options = {}) {
+export function useFetch(url:RequestInfo|URL, options = {}) {
   const [{ loading, error, data }, dispatch] = useReducer(dataReducer, {
     data: null,
     loading: false,

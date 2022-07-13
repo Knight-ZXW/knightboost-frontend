@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import axios, { AxiosRequestConfig, Canceler } from 'axios'
 
-import { isFunction } from 'utils/is'
+import { isFunction } from '@/utils/is'
 
 // Used to store the identification and cancellation function of each request
 let pendingMap = new Map<string, Canceler>()

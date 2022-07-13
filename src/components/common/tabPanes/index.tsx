@@ -32,15 +32,17 @@ const initPane = [
   }
 ]
 
+export interface PanesItemProps {
+  title: string
+  content: Component
+  key: string
+  closable: boolean
+  path: string
+}
+
 interface Props {
   defaultActiveKey: string
-  panesItem: {
-    title: string
-    content: Component
-    key: string
-    closable: boolean
-    path: string
-  }
+  panesItem: PanesItemProps,
   tabActiveKey: string
 }
 
@@ -48,6 +50,7 @@ interface Props {
 const TabPanes: FC<Props> = (props) => {
   const dispatch = useAppDispatch()
   const reloadPath = useAppSelector(selectReloadPath)
+  //rename  to curTabs
   const curTab = useAppSelector(selectTabs)
   const [activeKey, setActiveKey] = useState<string>('')
   const [panes, setPanes] = useState<CommonObjectType[]>(initPane)
@@ -65,7 +68,7 @@ const TabPanes: FC<Props> = (props) => {
   // 记录当前打开的tab
   const storeTabs = useCallback(
     (ps): void => {
-      const pathArr = ps.map((item) => item.path)
+      const pathArr = ps.map((item: { path: any }) => item.path)
       dispatch(setTabs(pathArr))
     },
     [dispatch]
@@ -185,7 +188,7 @@ const TabPanes: FC<Props> = (props) => {
     const newPath = pathname + search
 
     // 当前的路由和上一次的一样，return
-    if (!panesItem.path || panesItem.path === pathRef.current) return
+    if (!panesItem || !pathRef &&  !panesItem.path || panesItem.path === pathRef.current) return
 
     // 保存这次的路由地址
     pathRef.current = newPath
